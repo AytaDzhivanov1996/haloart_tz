@@ -1,0 +1,37 @@
+{% extends 'shopping_list/base.html' %}
+
+{% block content %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-primery border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+        <nav class="ms-5">
+            <a class="p-2 btn btn-info" href="{% url 'shopping_list:item_create' %}">Добавить продукт</a>
+        </nav>
+    </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Описание</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>{{ object.name }}</td>
+                    <td>{{ object.quantity }}</td>
+                    <td>{{ object.description }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{% url 'shopping_list:item_update' object.pk %}">Update</a>
+                        <a class="btn btn-danger" href="{% url 'shopping_list:item_delete' object.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <form method="get">
+            Фильтрация и сортировка
+            {{ filter.form.as_p }}
+            <input type="submit" />
+        </form>
+{% endblock %}
